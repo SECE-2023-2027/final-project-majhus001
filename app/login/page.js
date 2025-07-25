@@ -52,7 +52,7 @@ export default function LoginPage() {
           type: "login",
           email: formData.email,
           password: formData.password,
-          role: role, 
+          role: role,
         }),
       });
 
@@ -62,9 +62,9 @@ export default function LoginPage() {
       localStorage.setItem("CurrentUser", JSON.stringify(data.user));
       if (data.token) localStorage.setItem("token", data.token);
 
-      if(role == "Faculty"){
+      if (role == "Faculty") {
         router.push("/admin/dashboard");
-      }else{
+      } else {
         router.push("/user/dashboard");
       }
     } catch (err) {
@@ -92,14 +92,18 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => setRole("Student")}
-            className={`px-4 py-2 rounded ${role === "Student" ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+            className={`px-4 py-2 rounded ${
+              role === "Student" ? "bg-blue-600 text-white" : "bg-gray-200"
+            }`}
           >
             Student
           </button>
           <button
             type="button"
             onClick={() => setRole("Faculty")}
-            className={`px-4 py-2 rounded ${role === "Faculty" ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+            className={`px-4 py-2 rounded ${
+              role === "Faculty" ? "bg-blue-600 text-white" : "bg-gray-200"
+            }`}
           >
             Faculty
           </button>
@@ -107,7 +111,9 @@ export default function LoginPage() {
 
         <form className={styles.form} onSubmit={handleLogin}>
           <div className={styles.inputGroup}>
-            <label htmlFor="email" className={styles.label}>Email</label>
+            <label htmlFor="email" className={styles.label}>
+              Email
+            </label>
             <input
               className={styles.input}
               type="email"
@@ -119,7 +125,9 @@ export default function LoginPage() {
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="password" className={styles.label}>Password</label>
+            <label htmlFor="password" className={styles.label}>
+              Password
+            </label>
             <input
               className={styles.input}
               type="password"
@@ -161,7 +169,7 @@ export default function LoginPage() {
         </div>
 
         <p className={styles.signupLink}>
-          Don't have an account? <a href="/register">Sign up</a>
+          Don&apos;t have an account? <a href="/register">Sign up</a>
         </p>
       </div>
     </div>
