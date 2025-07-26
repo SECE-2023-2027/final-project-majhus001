@@ -298,7 +298,7 @@ export default function StudentDashboard() {
                         </div>
                         {item.comments && (
                           <p className="mt-2 text-sm text-gray-600 bg-gray-50 p-2 rounded">
-                            "{item.comments}"
+                            {item.comments}
                           </p>
                         )}
                       </div>
