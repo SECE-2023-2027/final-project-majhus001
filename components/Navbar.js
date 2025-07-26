@@ -30,7 +30,7 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <Link href="/" className={styles.logo}>
-        Evaluation 
+        CollabScore 
       </Link>
 
       <div className={styles.links}>
