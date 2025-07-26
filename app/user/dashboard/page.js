@@ -10,6 +10,7 @@ export default function StudentDashboard() {
   const [user, setUser] = useState(null);
   const [recentEvaluations, setRecentEvaluations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Initialize user from session or localStorage
   useEffect(() => {
@@ -39,8 +40,12 @@ export default function StudentDashboard() {
       if (!user?.email) return;
 
       try {
+        setLoading(true);
+        setError(null);
+        
         // Fetch teams
         const teamsRes = await fetch(`/api/student-teams?email=${user.email}`);
+        if (!teamsRes.ok) throw new Error("Failed to fetch teams");
         const teamsData = await teamsRes.json();
         setTeams(teamsData.teams || []);
 
@@ -48,6 +53,7 @@ export default function StudentDashboard() {
         const evalRes = await fetch(
           `/api/evaluate/recent?evaluator=${encodeURIComponent(user.email)}`
         );
+        if (!evalRes.ok) throw new Error("Failed to fetch evaluations");
         const evalData = await evalRes.json();
         
         // Normalize data to always be an array
@@ -60,6 +66,7 @@ export default function StudentDashboard() {
         }
       } catch (err) {
         console.error("Failed to fetch data", err);
+        setError(err.message);
         setTeams([]);
         setRecentEvaluations([]);
       } finally {
@@ -70,17 +77,20 @@ export default function StudentDashboard() {
     fetchData();
   }, [user]);
 
-
   const formatDate = (dateString) => {
     if (!dateString) return "Date not available";
-    const options = { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric',
-      hour: '2-digit', 
-      minute: '2-digit'
-    };
-    return new Date(dateString).toLocaleDateString(undefined, options);
+    try {
+      const options = { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit', 
+        minute: '2-digit'
+      };
+      return new Date(dateString).toLocaleDateString(undefined, options);
+    } catch (e) {
+      return "Invalid date";
+    }
   };
 
   if (loading) {
@@ -89,6 +99,23 @@ export default function StudentDashboard() {
         <div className="flex flex-col items-center gap-4">
           <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
           <p className="text-gray-600 font-medium">Loading your dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-white">
+        <div className="bg-white p-6 rounded-lg shadow-md max-w-md text-center">
+          <h2 className="text-xl font-bold text-red-600 mb-2">Error</h2>
+          <p className="text-gray-700 mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Try Again
+          </button>
         </div>
       </div>
     );
@@ -103,7 +130,9 @@ export default function StudentDashboard() {
             <h1 className="text-3xl font-bold text-gray-800">
               Welcome back, {user?.email.split("@")[0]}!
             </h1>
-            <p className="text-gray-600 mt-1">Here are your current teams and evaluations</p>
+            <p className="text-gray-600 mt-1">
+              Here are your current teams and evaluations
+            </p>
           </div>
           <div className="bg-white p-3 rounded-full shadow-sm">
             <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
@@ -240,7 +269,7 @@ export default function StudentDashboard() {
             </div>
           ) : (
             <div className="space-y-6">
-              {recentEvaluations?.map((evaluation) => (
+              {recentEvaluations.map((evaluation) => (
                 <div key={evaluation._id} className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
                   <div className="flex justify-between items-start mb-4">
                     <div>
@@ -261,7 +290,7 @@ export default function StudentDashboard() {
                       <div key={item._id} className="border-l-4 border-blue-200 pl-4 py-2">
                         <div className="flex justify-between items-start">
                           <h4 className="font-medium text-gray-700">
-                            {item.peer.split('@')[0]}
+                            {item.peer.split("@")[0]}
                           </h4>
                           <div className="flex gap-4">
                             <div className="flex items-center">
@@ -270,7 +299,7 @@ export default function StudentDashboard() {
                                 {[...Array(5)].map((_, i) => (
                                   <svg
                                     key={i}
-                                    className={`w-4 h-4 ${i < item.contribution ? 'text-yellow-400' : 'text-gray-300'}`}
+                                    className={`w-4 h-4 ${i < item.contribution ? "text-yellow-400" : "text-gray-300"}`}
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                   >
@@ -285,7 +314,7 @@ export default function StudentDashboard() {
                                 {[...Array(5)].map((_, i) => (
                                   <svg
                                     key={i}
-                                    className={`w-4 h-4 ${i < item.teamwork ? 'text-green-400' : 'text-gray-300'}`}
+                                    className={`w-4 h-4 ${i < item.teamwork ? "text-green-400" : "text-gray-300"}`}
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                   >
