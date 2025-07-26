@@ -215,7 +215,7 @@ export default function EvaluatePage() {
           {alreadyEvaluated ? (
             <div className="p-6 text-center">
               <div className="bg-yellow-100 text-yellow-700 p-4 rounded-lg mb-4">
-                <p>You've already submitted an evaluation for this team.</p>
+                <p>You&apos;ve already submitted an evaluation for this team.</p>
               </div>
               <button
                 onClick={() => router.push("/user/dashboard")}

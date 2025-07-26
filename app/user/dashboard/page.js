@@ -42,7 +42,7 @@ export default function StudentDashboard() {
       try {
         setLoading(true);
         setError(null);
-        
+
         // Fetch teams
         const teamsRes = await fetch(`/api/student-teams?email=${user.email}`);
         if (!teamsRes.ok) throw new Error("Failed to fetch teams");
@@ -55,7 +55,7 @@ export default function StudentDashboard() {
         );
         if (!evalRes.ok) throw new Error("Failed to fetch evaluations");
         const evalData = await evalRes.json();
-        
+
         // Normalize data to always be an array
         if (Array.isArray(evalData.data)) {
           setRecentEvaluations(evalData.data || []);
@@ -80,12 +80,12 @@ export default function StudentDashboard() {
   const formatDate = (dateString) => {
     if (!dateString) return "Date not available";
     try {
-      const options = { 
-        year: 'numeric', 
-        month: 'short', 
-        day: 'numeric',
-        hour: '2-digit', 
-        minute: '2-digit'
+      const options = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       };
       return new Date(dateString).toLocaleDateString(undefined, options);
     } catch (e) {
@@ -215,9 +215,13 @@ export default function StudentDashboard() {
                       </svg>
                     </div>
                     <div>
+
+
+
                       <h3 className="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
-                        {team.teamName}
+                        {`${team.teamName}`}
                       </h3>
+
                       <p className="text-sm text-gray-500 mt-1">
                         Click to evaluate this team
                       </p>
@@ -270,7 +274,10 @@ export default function StudentDashboard() {
           ) : (
             <div className="space-y-6">
               {recentEvaluations.map((evaluation) => (
-                <div key={evaluation._id} className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
+                <div
+                  key={evaluation._id}
+                  className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow"
+                >
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800">
@@ -287,19 +294,28 @@ export default function StudentDashboard() {
 
                   <div className="space-y-4">
                     {evaluation.evaluations.map((item) => (
-                      <div key={item._id} className="border-l-4 border-blue-200 pl-4 py-2">
+                      <div
+                        key={item._id}
+                        className="border-l-4 border-blue-200 pl-4 py-2"
+                      >
                         <div className="flex justify-between items-start">
                           <h4 className="font-medium text-gray-700">
                             {item.peer.split("@")[0]}
                           </h4>
                           <div className="flex gap-4">
                             <div className="flex items-center">
-                              <span className="text-gray-500 text-sm mr-1">Contribution:</span>
+                              <span className="text-gray-500 text-sm mr-1">
+                                Contribution:
+                              </span>
                               <div className="flex">
                                 {[...Array(5)].map((_, i) => (
                                   <svg
                                     key={i}
-                                    className={`w-4 h-4 ${i < item.contribution ? "text-yellow-400" : "text-gray-300"}`}
+                                    className={`w-4 h-4 ${
+                                      i < item.contribution
+                                        ? "text-yellow-400"
+                                        : "text-gray-300"
+                                    }`}
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                   >
@@ -309,12 +325,18 @@ export default function StudentDashboard() {
                               </div>
                             </div>
                             <div className="flex items-center">
-                              <span className="text-gray-500 text-sm mr-1">Teamwork:</span>
+                              <span className="text-gray-500 text-sm mr-1">
+                                Teamwork:
+                              </span>
                               <div className="flex">
                                 {[...Array(5)].map((_, i) => (
                                   <svg
                                     key={i}
-                                    className={`w-4 h-4 ${i < item.teamwork ? "text-green-400" : "text-gray-300"}`}
+                                    className={`w-4 h-4 ${
+                                      i < item.teamwork
+                                        ? "text-green-400"
+                                        : "text-gray-300"
+                                    }`}
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                   >
