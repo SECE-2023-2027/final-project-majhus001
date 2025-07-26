@@ -52,9 +52,9 @@ export default function StudentDashboard() {
         
         // Normalize data to always be an array
         if (Array.isArray(evalData.data)) {
-          setRecentEvaluations(evalData.data);
+          setRecentEvaluations(evalData.data || []);
         } else if (evalData && !Array.isArray(evalData.data)) {
-          setRecentEvaluations([evalData.data]);
+          setRecentEvaluations([evalData.data] || []);
         } else {
           setRecentEvaluations([]);
         }
@@ -69,6 +69,7 @@ export default function StudentDashboard() {
 
     fetchData();
   }, [user]);
+
 
   const formatDate = (dateString) => {
     if (!dateString) return "Date not available";
@@ -239,7 +240,7 @@ export default function StudentDashboard() {
             </div>
           ) : (
             <div className="space-y-6">
-              {recentEvaluations.map((evaluation) => (
+              {recentEvaluations?.map((evaluation) => (
                 <div key={evaluation._id} className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
                   <div className="flex justify-between items-start mb-4">
                     <div>
