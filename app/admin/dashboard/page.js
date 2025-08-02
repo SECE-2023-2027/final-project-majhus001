@@ -38,37 +38,37 @@ export default function AdminDashboard() {
       <div className="flex gap-4 mb-6">
         <button
           onClick={() => router.push("/admin/create-team")}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-blue-600 text-white px-4 py-2 cursor-pointer rounded hover:bg-blue-700"
         >
           ➕ Create New Team
         </button>
         <button
           onClick={() => router.push("/admin/update-team")}
-          className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+          className="bg-yellow-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-yellow-600"
         >
           ✏️ Update Existing Team
         </button>
         <button
           onClick={() => router.push("/admin/evaluations")}
-          className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900"
+          className="bg-gray-800 cursor-pointer text-white px-4 py-2 rounded hover:bg-gray-900"
         >
           📂 View All Evaluations
         </button>
         <button
           onClick={() => router.push("/admin/add-student")}
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+          className="bg-indigo-600 cursor-pointer text-white px-4 py-2 rounded hover:bg-indigo-700"
         >
           ➕ Add Student
         </button>
         <button
           onClick={() => router.push("/admin/view-students")}
-          className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+          className="bg-purple-600 cursor-pointer text-white px-4 py-2 rounded hover:bg-purple-700"
         >
           📚 View All Students
         </button>
         <button
           onClick={() => router.push("/admin/reports")}
-          className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+          className="bg-purple-600 cursor-pointer text-white px-4 py-2 rounded hover:bg-purple-700"
         >
           📚 View All Reports
         </button>
